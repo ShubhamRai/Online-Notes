@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+<html>
+	<title>Delete</title>
+	<h3>Welcome {{=auth.user.first_name}}</h3>
+{{ if len(a)>1:}}
+{{x='Your Tasks are '}}
+{{else:}}
+{{x='You don\'t have any tasks right now'}}
+{{pass}}
+<hr>
+	<h5>{{=x}}</h5>
+	<table>
+{{for  i in range(len(a)):}}
+	<tr>
+	<td><ul>{{=LI(A(a[i]['title'], _href=URL('shtask',args=a[i]['title'].strip())))}} </ul></td>
+	<td><button onclick="document.location='{{=URL(r=request,f='taskde',args=a[i]['title'])}}';">Delete</button></td>
+	</tr>
+{{pass}}
+	</table>
+</html>

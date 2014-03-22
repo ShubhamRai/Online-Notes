@@ -1,0 +1,11 @@
+def ma():
+	import datetime
+	a=db(db.tasks.id>0).select()
+	for i in range(len(a)):
+		if a[i]['pending']==datetime.date.today():
+			mail.send(a[i]['authoris'],subject='Pending Task',message='You have a task pending '+a[i]['title'])
+	return
+from gluon.scheduler import Scheduler
+Scheduler(db,dict(f=ma))
+
+

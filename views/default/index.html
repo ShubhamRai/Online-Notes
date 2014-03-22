@@ -1,0 +1,65 @@
+{{extend 'layout.html'}}
+<html>
+	<title>Welcome {{=auth.user.first_name}}</title>
+	{{if auth.user.pic != '':}}
+	<img style="float:right" class="image-circle" width="200px" src={{=URL('download',args=auth.user.pic)}} alt="Error No photo"></img>
+{{else:}}
+	{{=A('Add Profile Pic',_href=URL('/user/profile'))}}
+{{pass}}
+
+	<h3>Welcome {{=auth.user.first_name}}</h3>
+	<table border="1">
+	<tr>
+	<td>
+	<b>NOTES</b>
+	</td>
+	<td>
+	<b>TASKS</b>
+	</td>
+	</tr>
+	<tr>
+	<td>
+{{a=b.split('@')}}
+{{ if len(a)>1:}}
+{{x='Your Notes are '}}
+{{else:}}
+{{x='You don\'t have any notes right now'}}
+{{pass}}
+	<h5>{{=x}}</h5>
+	<ul>
+{{for  i in range(1,len(a)):}}
+{{=LI(A(a[i], _href=URL('show',args=a[i].strip())))}}
+{{pass}}
+	</ul></td>
+	<td>
+{{if len(c)>0:}}
+{{x='Your Tasks are '}}
+{{else:}}
+{{x='You don\'t have any tasks right now'}}
+{{pass}}
+	<h5>{{=x}}</h5>
+	<hr/>
+	<br/>
+{{if len(c)>0:}}
+	<ul>
+<h5 >{{=p}}</h5><br/>
+{{for i in range(len(c)):}}
+{{if c[i]['done']==True:}}
+	{{=LI(A('  '+c[i]['title'],_href=URL('shtask',args=c[i]['title'])))}}
+{{pass}}
+{{pass}}
+</ul>
+<br/><ul>
+<h5 >{{=q}}</h5>
+<br/>
+{{for i in range(len(c)):}}
+{{if c[i]['done']==False:}}
+	{{=LI(A(c[i]['title'],_href=URL('shtask',args=c[i]['title'])))}}
+{{pass}}
+{{pass}}
+</ul>
+{{pass}}
+</td>
+</tr>
+</table>
+</html>

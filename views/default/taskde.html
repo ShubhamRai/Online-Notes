@@ -1,0 +1,11 @@
+{{extend 'layout.html'}}
+<html>
+	<title>Delete Confirmation</title>
+	<h3>Are You Sure ?? :(</h3>
+	<table>
+	<tr>
+	<td><button onclick="document.location='{{=URL(r=request,f='taskdel',args=title)}}';">Yes</button></td>
+	<td><button onclick="document.location='{{=URL(r=request,f='index')}}';">No</button></td>
+	</tr>
+	</table>
+</html>

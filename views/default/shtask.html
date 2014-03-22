@@ -1,0 +1,19 @@
+{{extend 'layout.html'}}
+<html>
+	<title>Task</title>
+	<h3 align = "center">Title : {{=title}}</h3>
+	{{if a[0]['done']==False:}}<!--also don't show when the time has elapsed --!>
+	<h4 align="center">Due Date : {{=pending.date()}}</h4>
+{{else:}}
+<h4 align="center">Task Done</h4>
+{{pass}}
+	<body>
+		<b>Content :</b></br> <pre>{{=description}}</pre></br></br></br>
+		<div align="left">
+			<button onclick="document.location='{{=URL(r=request,f='taskedit',args=title)}}';">Edit</button>
+			<button onclick="document.location='{{=URL(r=request,f='taskde',args=title)}}';">Delete</button>
+			
+		</div>
+	</body>
+
+</html>

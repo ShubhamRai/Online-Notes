@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+<html>
+<h5>{{=x}}</h5>
+{{for i in range(len(b)):}}
+{{=b[i]['title']}}
+{{=b[i]['pending'].date()}}
+<br/>
+{{pass}}
+</html>

@@ -1,0 +1,196 @@
+timestamp: 2013-03-28T19:03:40.481182
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(128) UNIQUE,
+    password CHAR(512),
+    Country CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2013-03-28T19:03:40.655678
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-03-28T19:03:40.767146
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-03-28T19:03:40.879261
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2013-03-28T19:03:41.027310
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-03-28T19:03:41.259449
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2013-03-28T19:04:21.540303
+CREATE TABLE note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(128),
+    val TEXT
+);
+success!
+timestamp: 2013-03-30T17:45:06.784354
+CREATE TABLE notes(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512)
+);
+success!
+timestamp: 2013-03-30T17:58:51.264226
+ALTER TABLE auth_user ADD notes CHAR(512);
+timestamp: 2013-03-30T17:59:20.588751
+ALTER TABLE note ADD readable CHAR(512);
+timestamp: 2013-03-31T15:03:50.035211
+ALTER TABLE note ADD readby CHAR(512);
+timestamp: 2013-03-31T17:13:21.503229
+ALTER TABLE auth_user ADD notifications INTEGER;
+timestamp: 2013-04-01T18:19:55.004330
+ALTER TABLE note ADD description CHAR(255);
+timestamp: 2013-04-01T19:29:20.036115
+CREATE TABLE tag(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    word CHAR(512),
+    link INTEGER
+);
+success!
+timestamp: 2013-04-01T19:51:53.395601
+ALTER TABLE note ADD tags CHAR(512);
+timestamp: 2013-04-01T19:56:50.345970
+CREATE TABLE tags(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    word CHAR(512),
+    link CHAR(512)
+);
+success!
+timestamp: 2013-04-01T20:48:36.478772
+ALTER TABLE note ADD authoris CHAR(512);
+timestamp: 2013-04-02T00:01:53.900859
+ALTER TABLE note ADD md TIMESTAMP;
+timestamp: 2013-04-02T00:01:54.047268
+ALTER TABLE note ADD cd TIMESTAMP;
+timestamp: 2013-04-02T10:29:40.898775
+ALTER TABLE auth_user ADD checkpic CHAR(1);
+timestamp: 2013-04-02T10:29:41.208148
+ALTER TABLE auth_user ADD pic CHAR(512);
+timestamp: 2013-04-02T10:47:44.387364
+ALTER TABLE auth_user ADD img_id INTEGER;
+timestamp: 2013-04-02T18:21:17.330845
+CREATE TABLE att(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usr CHAR(512),
+    title CHAR(512),
+    fil CHAR(512)
+);
+success!
+timestamp: 2013-04-02T21:54:47.520451
+ALTER TABLE att ADD nm CHAR(512);
+timestamp: 2013-04-04T01:02:19.242537
+ALTER TABLE tags ADD counter INTEGER;
+timestamp: 2013-04-04T16:38:17.815522
+ALTER TABLE tags ADD title CHAR(512);
+timestamp: 2013-04-04T16:38:17.941003
+ALTER TABLE tags ADD authoris CHAR(512);
+timestamp: 2013-04-04T18:55:51.207699
+CREATE TABLE task(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(128) UNIQUE,
+    description CHAR(255),
+    pending TIMESTAMP
+);
+success!
+timestamp: 2013-04-04T20:50:15.144412
+ALTER TABLE task ADD done CHAR(1);
+timestamp: 2013-04-04T21:22:44.874935
+ALTER TABLE task ADD authoris CHAR(512);
+timestamp: 2013-04-14T23:03:37.184577
+CREATE TABLE queue(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512),
+    dat TIMESTAMP
+);
+success!
+timestamp: 2013-04-14T23:14:55.836507
+ALTER TABLE queue ADD status CHAR(512);
+timestamp: 2013-04-15T00:15:42.594015
+CREATE TABLE scheduler_task(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    application_name CHAR(512),
+    task_name CHAR(512),
+    group_name CHAR(512),
+    status CHAR(512),
+    function_name CHAR(512),
+    uuid CHAR(512) UNIQUE,
+    args TEXT,
+    vars TEXT,
+    enabled CHAR(1),
+    start_time TIMESTAMP,
+    next_run_time TIMESTAMP,
+    stop_time TIMESTAMP,
+    repeats INTEGER,
+    retry_failed INTEGER,
+    period INTEGER,
+    timeout INTEGER,
+    sync_output INTEGER,
+    times_run INTEGER,
+    times_failed INTEGER,
+    last_run_time TIMESTAMP,
+    assigned_worker_name CHAR(512)
+);
+success!
+timestamp: 2013-04-15T00:15:42.764604
+CREATE TABLE scheduler_run(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_id INTEGER REFERENCES scheduler_task (id) ON DELETE CASCADE,
+    status CHAR(512),
+    start_time TIMESTAMP,
+    stop_time TIMESTAMP,
+    run_output TEXT,
+    run_result TEXT,
+    traceback TEXT,
+    worker_name CHAR(512)
+);
+success!
+timestamp: 2013-04-15T00:15:42.911538
+CREATE TABLE scheduler_worker(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    worker_name CHAR(512) UNIQUE,
+    first_heartbeat TIMESTAMP,
+    last_heartbeat TIMESTAMP,
+    status CHAR(512),
+    is_ticker CHAR(1),
+    group_names TEXT
+);
+success!
+timestamp: 2013-04-15T03:45:17.876559
+ALTER TABLE task ADD useless CHAR(128);

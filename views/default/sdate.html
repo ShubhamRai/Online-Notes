@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+{{if len(nam)==0:}}
+{{x="There are no tasks on that date!"}}
+{{else:}}
+{{x="The search results are :"}}
+{{pass}}
+<h3>{{=x}}</h3>
+{{for i in range(len(nam)):}}
+{{=LI(A(nam[i].title,_href=URL('shtask',args=nam[i].title)))}}
+{{pass}}
